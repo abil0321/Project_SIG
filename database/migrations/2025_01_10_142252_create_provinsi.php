@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('provinsi', function (Blueprint $table) {
             $table->id();
-            $table->string('name',30)->unique()->nullable(false);
-            $table->string('alt_name',30);
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->string('nama');
+            $table->string('alt_nama')->nullable();
+            $table->decimal('lat');
+            $table->decimal('long');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinsis');
+        Schema::dropIfExists('provinsi');
     }
 };

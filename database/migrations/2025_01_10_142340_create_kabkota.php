@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('kabkota', function (Blueprint $table) {
             $table->id();
-            $table->string('name',30)->unique()->nullable(false);
-            $table->string('alt_name',30);
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->foreignId('provinsi_id')->constrained('provinsi');
+            $table->string('nama');
+            $table->string('alt_nama')->nullable();
+            $table->decimal('lat');
+            $table->decimal('long');
+            $table->unsignedBigInteger('provinsi_id');
+            $table->foreign('provinsi_id')->references('id')->on('provinsi')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kabkotas');
+        Schema::dropIfExists('kabkota');
     }
 };

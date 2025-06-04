@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Provinsi extends Model
 {
-    use Hasfactory;
+    //
     protected $table = 'provinsi';
-    protected $fillable = ['name','alt_name','latitude','longitude'];
+    protected $fillable = ['nama', 'alt_nama', 'lat', 'long'];
+    public function kabkota() {
+        return $this->hasMany(Kabkota::class, 'id_provinsi', 'id');
+    }
 }

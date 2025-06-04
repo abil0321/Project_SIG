@@ -6,9 +6,11 @@ use App\Filament\Resources\ProvinsiResource\Pages;
 use App\Filament\Resources\ProvinsiResource\RelationManagers;
 use App\Models\Provinsi;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,18 +25,18 @@ class ProvinsiResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(30),
-                Forms\Components\TextInput::make('alt_name')
-                    ->required()
-                    ->maxLength(30),
-                Forms\Components\TextInput::make('latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
+                //
+                TextInput::make('nama')
+                ->label('Nama')
+                ->required(),
+                TextInput::make('lat')
+                ->label('Latitude')
+                ->numeric()
+                ->required(),
+                TextInput::make('long')
+                ->label('Longitude')
+                ->numeric()
+                ->required(),
             ]);
     }
 
@@ -42,31 +44,17 @@ class ProvinsiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('alt_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('latitude')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                //
+                TextColumn::make('nama')->label('Nama'),
+                TextColumn::make('lat')->label('Latitude'),
+                TextColumn::make('long')->label('Longitude'),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,6 +75,7 @@ class ProvinsiResource extends Resource
         return [
             'index' => Pages\ListProvinsis::route('/'),
             'create' => Pages\CreateProvinsi::route('/create'),
+            'view' => Pages\ViewProvinsi::route('/{record}'),
             'edit' => Pages\EditProvinsi::route('/{record}/edit'),
         ];
     }
